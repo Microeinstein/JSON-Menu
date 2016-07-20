@@ -1,6 +1,5 @@
 # JSON Menu
-This tool allows you to make a quick menu to run everything you want with a JSON-formatted file.
-
+This tool allows you to make a quick menu to run everything you want with a JSON-formatted file.  
 If doesn't exist a file called **menu.json** it makes a default menu as example.
 
 # Syntax/Features
@@ -43,4 +42,8 @@ If doesn't exist a file called **menu.json** it makes a default menu as example.
   * "**More...**" submenu if there are over 31 items
 
 # Download
-Binaries: https://dl.dropboxusercontent.com/u/87610045/Programmi/JSON%20Menu.zip
+Windows binaries: https://dl.dropboxusercontent.com/u/87610045/Programmi/JSON%20Menu.zip
+
+# Info
+Built-in icons by [Yusuke Kamiyamane](http://p.yusukekamiyamane.com/) (Fugue)  
+JSON framework by [Newtonsoft](http://www.newtonsoft.com/json)
