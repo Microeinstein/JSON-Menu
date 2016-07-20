@@ -73,7 +73,7 @@ namespace Menu {
                                Path.GetFileName(folder);
                 item.Text = isText ? text : itemT;
                 item.Text = item.Text.Replace("&", "&&");
-                item.Image = isIcon ? getCustomImage(path) : GetIcon(folder);
+                item.Image = isIcon ? getCustomImage(icon) : GetIcon(folder);
                 item.Tag = new string[] { Path.GetFileName(folder), folder, "", Path.GetDirectoryName(folder) };
                 item.MouseUp += Context.itemClick;
 
