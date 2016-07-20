@@ -4,6 +4,7 @@ This tool allows you to make a quick menu to run everything you want with a JSON
 If doesn't exist a file called **menu.json** it makes a default menu as example.
 
 # Syntax/Features
+* Configuration:
 ```javascript
 [                                 //Array of objects
   {
@@ -27,7 +28,19 @@ If doesn't exist a file called **menu.json** it makes a default menu as example.
   }
 ]
 ```
-
+* Icon:
+  * Left click for menu
+  * Right click for internal menu:
+    * Reload
+    * Edit menu (launch default editor)
+    * Find icon
+    * Exit
+* Items:
+  * Left click to launch
+  * Right click to launch as administrator
+  * Middle click to find **path** in explorer
+* Menu:
+  * "**More...**" submenu if there are over 31 items
 
 # Download
 Binaries: https://dl.dropboxusercontent.com/u/87610045/Programmi/JSON%20Menu.zip
