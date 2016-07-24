@@ -27,7 +27,7 @@ If doesn't exist a file called **menu.json** it makes a default menu as example.
   }
 ]
 ```
-* Icon:
+* System tray icon:
   * Left click for menu
   * Right click for internal menu:
     * Reload
