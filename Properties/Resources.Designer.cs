@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Menu.Properties {
+namespace Micro.Menu.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Menu.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Menu.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Micro.Menu.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,29 @@ namespace Menu.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
-        internal static System.Drawing.Icon binocular {
+        internal static System.Drawing.Icon book {
             get {
-                object obj = ResourceManager.GetObject("binocular", resourceCulture);
+                object obj = ResourceManager.GetObject("book", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon bookOpen {
+            get {
+                object obj = ResourceManager.GetObject("bookOpen", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon clock {
+            get {
+                object obj = ResourceManager.GetObject("clock", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -81,34 +101,7 @@ namespace Menu.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a [
-        ///	{
-        ///		&quot;text&quot;: &quot;Example&quot;,
-        ///		&quot;items&quot;: [
-        ///			{
-        ///				&quot;text&quot;: &quot;Item one&quot;,
-        ///				&quot;path&quot;: &quot;C:\\Windows\\notepad.exe&quot;
-        ///			},
-        ///			{
-        ///				&quot;text&quot;: &quot;Item w\/o process&quot;
-        ///			},
-        ///			&quot;separator&quot;,
-        ///			{
-        ///				&quot;text&quot;: &quot;Menu one&quot;,
-        ///				&quot;icon&quot;: &quot;C:\\Windows\\System32\\imageres.dll,17&quot;,
-        ///				&quot;items&quot;: [
-        ///					{
-        ///						&quot;text&quot;: &quot;Sub-item one&quot;,
-        ///						&quot;path&quot;: &quot;C:\\Windows\\System32\\cmd.exe&quot;,
-        ///						&quot;args&quot;: &quot;\/k title Terminal &amp; prompt %username%@%userdomain%:~$$ &quot;,
-        ///						&quot;workDir&quot;: &quot;C:\\&quot;
-        ///					}
-        ///				]
-        ///			}
-        ///		]
-        ///	},
-        ///	{
-        ///		&quot; [stringa troncata]&quot;;.
+        ///   Cerca una stringa localizzata simile a Ww0KCXsNCgkJInRleHQiOiAiRXhhbXBsZSIsDQoJCSJpdGVtcyI6IFsNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIG9uZSIsDQoJCQkJInBhdGgiOiAiQzpcXFdpbmRvd3NcXG5vdGVwYWQuZXhlIg0KCQkJfSwNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIHdcL28gcHJvY2VzcyINCgkJCX0sDQoJCQkic2VwYXJhdG9yIiwNCgkJCXsNCgkJCQkidGV4dCI6ICJNZW51IG9uZSIsDQoJCQkJImljb24iOiAiQzpcXFdpbmRvd3NcXFN5c3RlbTMyXFxpbWFnZXJlcy5kbGwsMTciLA0KCQkJCSJpdGVtcyI6IFsNCgkJCQkJew0KCQkJCQkJInRleHQiOiAiU3ViLWl0ZW0gb25lIiwNCgkJCQkJCSJwYXRoIjogIkM6XFxXaW5kb3dzXFxTeXN0ZW0zMlxcY21kLmV4ZSIsDQoJCQkJCQkiYXJn [stringa troncata]&quot;;.
         /// </summary>
         internal static string defaultJson {
             get {
@@ -119,9 +112,39 @@ namespace Menu.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
-        internal static System.Drawing.Icon json {
+        internal static System.Drawing.Icon magnifier {
             get {
-                object obj = ResourceManager.GetObject("json", resourceCulture);
+                object obj = ResourceManager.GetObject("magnifier", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon pencil {
+            get {
+                object obj = ResourceManager.GetObject("pencil", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon power {
+            get {
+                object obj = ResourceManager.GetObject("power", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon question {
+            get {
+                object obj = ResourceManager.GetObject("question", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -139,9 +162,9 @@ namespace Menu.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
-        internal static System.Drawing.Icon wrench {
+        internal static System.Drawing.Icon toolbox {
             get {
-                object obj = ResourceManager.GetObject("wrench", resourceCulture);
+                object obj = ResourceManager.GetObject("toolbox", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
