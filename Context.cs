@@ -5,166 +5,137 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
+using static Micro.Menu.Core;
 
-namespace Menu {
+namespace Micro.Menu {
     class Context : ApplicationContext {
-        public static ContextMenuStrip ListL, ListR;
-        public static Screen scr;
-        public static int closeFrom;
-        public static string userName;
-        string path, jsonFile;
-        NotifyIcon quickBarItem;
-        FormIcon fi;
-        ToolStripMenuItem _reload, _edit, _findIcon, _exit;
+        public static ContextMenuStrip  ListL = new ContextMenuStrip() { Name = "MenuL", Size = new Size(61, 4) },
+                                        ListR = new ContextMenuStrip() { Name = "MenuR", Size = new Size(61, 4) };
+        public static NotifyIcon quickBarItem = new NotifyIcon() { Text = "Menu", Visible = true };
+        public static Screen              scr = Screen.FromControl(ListL);
+        public static int           closeFrom = 0;
+
+        public static string path = Path.Combine(Application.StartupPath, "menu.json"),
+                             temp = Path.Combine(Environment.ExpandEnvironmentVariables("%temp%"), "default.json"),
+                         jsonFile = Encoding.Default.GetString(Convert.FromBase64String(Properties.Resources.defaultJson));
+        bool justLoaded;
+        List<Element> elements = new List<Element>();
         List<ToolStripItem> items;
-        List<Element> elements;
-        MethodInfo mi;
+        ToolStripMenuItem powerCheck;
+        FormIcon fi;
+        Rectangle lastRect;
+        MethodInfo _showMenu = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
 
         public Context() {
-            //var s = @"D:\\Documenti\\file inesistente.txt";
-            //s = Path.GetExtension(s);
-            quickBarItem = new NotifyIcon();
-            ListL = new ContextMenuStrip();
-            ListR = new ContextMenuStrip();
-            scr = Screen.FromControl(ListL);
-            closeFrom = 0;
-            userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            path = Path.Combine(Application.StartupPath, "menu.json");
-            jsonFile = Properties.Resources.defaultJson;
-            elements = new List<Element>();
-            mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-
-            setLists();
-            setIcon();
-
-            _reload = new ToolStripMenuItem(
-                "Reload menu",
-                Properties.Resources.reload.ToBitmap(),
-                (a, b) => load());
-
-            _edit = new ToolStripMenuItem(
-                "Edit menu",
-                Properties.Resources.wrench.ToBitmap(),
-                edit);
-
-            _findIcon = new ToolStripMenuItem(
-                "Find icon",
-                Properties.Resources.binocular.ToBitmap(),
-                findIcon);
-
-            _exit = new ToolStripMenuItem(
-                "Exit",
-                Properties.Resources.cross.ToBitmap(),
-                close);
-
             ListR.Items.AddRange(new ToolStripItem[] {
-                _reload,
-                _edit,
-                _findIcon,
+                new ToolStripMenuItem("Show sample menu", Properties.Resources.question.ToBitmap(), showSample),
+                new ToolStripMenuItem("Edit menu", Properties.Resources.pencil.ToBitmap(), edit),
+                new ToolStripMenuItem("Find icon", Properties.Resources.magnifier.ToBitmap(), findIcon),
+                new ToolStripMenuItem("Reload menu", Properties.Resources.reload.ToBitmap(), (a, b) => load()),
+                powerCheck = new ToolStripMenuItem("Launch at startup", Properties.Resources.power.ToBitmap(), (a, b) => startupLaunch = powerCheck.Checked),
                 new ToolStripSeparator(),
-                _exit });
+                new ToolStripMenuItem("Exit", Properties.Resources.cross.ToBitmap(), close) });
 
             quickBarItem.MouseUp += click;
             ListL.Closing += listClosing;
 
             load();
         }
-        public void setLists() {
-            ListL.Name = "MenuL";
-            ListL.Size = new System.Drawing.Size(61, 4);
-            ListR.Name = "MenuR";
-            ListR.Size = new System.Drawing.Size(61, 4);
-        }
-        public void setIcon() {
-            quickBarItem.Icon = Properties.Resources.json;
-            quickBarItem.Text = "Menu";
-            quickBarItem.Visible = true;
-        }
-
+        
         public void load() {
-            quickBarItem.ShowBalloonTip(250, "", "Loading...", ToolTipIcon.None);
-
-            string balloon = "Loaded";
+            quickBarItem.Icon = Properties.Resources.clock;
             ListL.Items.Clear();
+            
+            items = new List<ToolStripItem>();
+            if (!File.Exists(path)) {
+                File.Create(path).Close();
+                File.WriteAllText(path, jsonFile);
+            } else
+                jsonFile = File.ReadAllText(path);
+            elements = JsonConvert.DeserializeObject<List<Element>>(jsonFile);
 
-            try {
-                items = new List<ToolStripItem>();
-                if (!File.Exists(path)) {
-                    File.Create(path).Close();
-                    File.WriteAllText(path, jsonFile);
-                    balloon = "Default menu loaded";
-                } else
-                    jsonFile = File.ReadAllText(path);
-                elements = JsonConvert.DeserializeObject<List<Element>>(jsonFile);
+            foreach (Element i in elements)
+                items.Add(i.toMenuItem());
 
-                foreach (Element i in elements)
-                    items.Add(i.toMenuItem());
-                
-                ListL.Items.AddRange(items.ToArray());
-            } catch (Exception ex) {
-                balloon = "Error";
-                if (ex.ToString().Contains("Json"))
-                    MessageBox.Show("Error while parsing menu: \n\n" + ex.Message, "Error", 0, (MessageBoxIcon)48);
-                else
-                    MessageBox.Show("Program error: \n\n" + ex.ToString(), "Critical", 0, (MessageBoxIcon)16);
-            }
-            quickBarItem.ShowBalloonTip(250, "", balloon, ToolTipIcon.None);
+            ListL.Items.AddRange(items.ToArray());
+            GC.Collect();
+            quickBarItem.Icon = Properties.Resources.book;
+            justLoaded = true;
         }
         public void click(object sender, MouseEventArgs e) {
             quickBarItem.ContextMenuStrip = null;
 
-            if (e.Button == MouseButtons.Left && ListL.Items.Count > 0)
+            if (e.Button == MouseButtons.Left && ListL.Items.Count > 0) {
                 quickBarItem.ContextMenuStrip = ListL;
-            else if (e.Button == MouseButtons.Right)
+                if (justLoaded || lastRect != mouseScreen.WorkingArea) {
+                    justLoaded = false;
+                    lastRect = mouseScreen.WorkingArea;
+                    var menu = quickBarItem.ContextMenuStrip.Items;
+                    for (int i = 0; i < menu.Count; i++) {
+                        if (menu[i] is ToolStripMenuItem tsmi) {
+                            menu.RemoveAt(i);
+                            menu.Insert(i, Element.moreMenu(tsmi));
+                        }
+                    }
+                }
+                quickBarItem.Icon = Properties.Resources.bookOpen;
+            } else if (e.Button == MouseButtons.Right) {
                 quickBarItem.ContextMenuStrip = ListR;
+                powerCheck.Checked = startupLaunch;
+            }
 
             if (quickBarItem.ContextMenuStrip != null)
-                mi.Invoke(quickBarItem, null);
+                _showMenu.Invoke(quickBarItem, null);
         }
         public static void itemClick(object sender, MouseEventArgs e) {
             ToolStripMenuItem s = (ToolStripMenuItem)sender;
+            quickBarItem.Icon = Properties.Resources.book;
 
-            string[] info = (string[])s.Tag;
-            if (e.Button != MouseButtons.Middle) {
-                closeFrom = 1;
-                try {
-                    if (info.Length >= 4) {
-                        ProcessStartInfo proc = new ProcessStartInfo(info[1], info[2]);
-                        if (info[3] != "")
-                            proc.WorkingDirectory = info[3];
+            FileInfo info = (FileInfo)s.Tag;
+            var final = info.finalPath;
+            if (File.Exists(final)) {
+                if (e.Button != MouseButtons.Middle) {
+                    closeFrom = 1;
+                    try {
+                        ProcessStartInfo proc;
+                        proc = IsCUI(info.finalPath) ?
+                                   new ProcessStartInfo(@"cmd", $"/k title {info.name} & {final} {info.arguments}") :
+                                   new ProcessStartInfo(final, info.arguments);
+                        proc.WorkingDirectory = info.finalWorkDir;
                         if (e.Button == MouseButtons.Right)
                             proc.Verb = "runas";
                         Process.Start(proc);
+                    } catch (Exception ex) {
+                        quickBarItem.ShowBalloonTip(5000, "Warning", $"Failed to start {info.name}:\n{ex.Message}\n\nPath: {final}", ToolTipIcon.Warning);
                     }
-                } catch (Exception ex) {
-                    MessageBox.Show(
-                        "Failed to start " + Path.GetFileNameWithoutExtension(info[0]) +
-                        ":\n" + ex.Message +
-                        "\n\n" + "Path:" +
-                        "\n" + info[1],
-                        "Fail", 0, MessageBoxIcon.Information);
-                }
-            } else {
-                Process.Start("explorer.exe", @"/select," + info[1]);
-            }
+                } else
+                    Process.Start("explorer.exe", $@"/select,{final}");
+            } else
+                quickBarItem.ShowBalloonTip(5000, "Error", $"Missing file!\n{final}", ToolTipIcon.Error);
         }
         public static void listClosing(object sender, ToolStripDropDownClosingEventArgs e) {
+            quickBarItem.Icon = Properties.Resources.book;
             if (closeFrom == 2)
                 e.Cancel = true;
             closeFrom = 0;
         }
 
-        public void findIcon(object sender, EventArgs e) {
-            fi = new FormIcon();
-            fi.Show();
-        }
         public void edit(object sender, EventArgs e) {
             if (!File.Exists(path)) {
                 File.Create(path).Close();
                 File.WriteAllText(path, jsonFile);
             }
             Process.Start(path);
+        }
+        public void showSample(object sender, EventArgs e) {
+            File.WriteAllText(temp, Encoding.Default.GetString(Convert.FromBase64String(Properties.Resources.defaultJson)));
+            Process.Start(temp);
+        }
+        public void findIcon(object sender, EventArgs e) {
+            fi = new FormIcon();
+            fi.Show();
         }
         public void close(object sender, EventArgs e) {
             quickBarItem.Visible = false;

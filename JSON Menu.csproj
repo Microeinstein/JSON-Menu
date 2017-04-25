@@ -7,7 +7,7 @@
     <ProjectGuid>{9BB2A2A3-D8BD-402F-A875-163F0667B546}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Menu</RootNamespace>
+    <RootNamespace>Micro.Menu</RootNamespace>
     <AssemblyName>JSON Menu</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -35,6 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -71,6 +72,17 @@
   <PropertyGroup>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Micro.Menu.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -91,14 +103,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="FileInfo.cs" />
     <Compile Include="FormIcon.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormIcon.Designer.cs">
       <DependentUpon>FormIcon.cs</DependentUpon>
     </Compile>
-    <Compile Include="Functions.cs" />
+    <Compile Include="Core.cs" />
     <Compile Include="Element.cs" />
+    <Compile Include="NirPack.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormIcon.resx">
@@ -158,18 +172,35 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\binocular.ico" />
+    <None Include="Resources\clock.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cross.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\wrench-screwdriver.ico" />
+    <None Include="Resources\arrow-repeat.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\arrow-circle-315.ico" />
+    <None Include="Resources\pencil.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\book.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifier.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\book-open-list.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control-power.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\question.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toolbox.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

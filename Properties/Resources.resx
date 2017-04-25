@@ -118,80 +118,37 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="binocular" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\binocular.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="book" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\book.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bookOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\book-open-list.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clock.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cross.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="defaultJson" xml:space="preserve">
-    <value>[
-	{
-		"text": "Example",
-		"items": [
-			{
-				"text": "Item one",
-				"path": "C:\\Windows\\notepad.exe"
-			},
-			{
-				"text": "Item w\/o process"
-			},
-			"separator",
-			{
-				"text": "Menu one",
-				"icon": "C:\\Windows\\System32\\imageres.dll,17",
-				"items": [
-					{
-						"text": "Sub-item one",
-						"path": "C:\\Windows\\System32\\cmd.exe",
-						"args": "\/k title Terminal &amp; prompt %username%@%userdomain%:~$$ ",
-						"workDir": "C:\\"
-					}
-				]
-			}
-		]
-	},
-	{
-		"folder": "C:\\",
-		"mask": ["*"],
-		"maxDepth": 1,
-		"showHiddenFiles": false,
-		"showHiddenFolders": false,
-		"showOnlyFiles": false,
-		"showOnlyFolders": true,
-		"sortByName": true
-	}
-]</value>
+    <value>Ww0KCXsNCgkJInRleHQiOiAiRXhhbXBsZSIsDQoJCSJpdGVtcyI6IFsNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIG9uZSIsDQoJCQkJInBhdGgiOiAiQzpcXFdpbmRvd3NcXG5vdGVwYWQuZXhlIg0KCQkJfSwNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIHdcL28gcHJvY2VzcyINCgkJCX0sDQoJCQkic2VwYXJhdG9yIiwNCgkJCXsNCgkJCQkidGV4dCI6ICJNZW51IG9uZSIsDQoJCQkJImljb24iOiAiQzpcXFdpbmRvd3NcXFN5c3RlbTMyXFxpbWFnZXJlcy5kbGwsMTciLA0KCQkJCSJpdGVtcyI6IFsNCgkJCQkJew0KCQkJCQkJInRleHQiOiAiU3ViLWl0ZW0gb25lIiwNCgkJCQkJCSJwYXRoIjogIkM6XFxXaW5kb3dzXFxTeXN0ZW0zMlxcY21kLmV4ZSIsDQoJCQkJCQkiYXJncyI6ICJcL2sgdGl0bGUgVGVybWluYWwgJiBwcm9tcHQgJXVzZXJuYW1lJUAldXNlcmRvbWFpbiU6fiQkICIsDQoJCQkJCQkid29ya0RpciI6ICJDOlxcIg0KCQkJCQl9DQoJCQkJXQ0KCQkJfQ0KCQldDQoJfSwNCgl7DQoJCSJmb2xkZXIiOiJDOiBcXCIsDQoJCSJtYXNrIjogWw0KCQkJIioiDQoJCV0sDQoJCSJtYXhEZXB0aCI6IDEsDQoJCSJzaG93SGlkZGVuRmlsZXMiOiBmYWxzZSwNCgkJInNob3dIaWRkZW5Gb2xkZXJzIjogZmFsc2UsDQoJCSJzaG93T25seUZpbGVzIjogZmFsc2UsDQoJCSJzaG93T25seUZvbGRlcnMiOiB0cnVlLA0KCQkic29ydEJ5TmFtZSI6IHRydWUNCgl9DQpd</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="json" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAgAAAAwAAAAWAAAAGgAAABoAAAAaAAAAGgAAABoAAAAaAAAAGgAAABoAAAAXAAAADAAA
-        AAIAAAAAAAAAAAAAAAQAAAAXAAAAKwAAAEYAAACMAAAAwAAAAN4AAADeAAAAwAAAAIwAAABGAAAALQAA
-        ABgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAFIMDAzMTk5O7HFxcflcXFz+PT09/iQkJPkQEBDsAgICzAAA
-        AFIAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAU0VFRXPhISE94aGhv9dXV3/Tk5O/0JCQv83Nzf/LCws/x0d
-        HfcFBQXPAQEBTQAAAAAAAAAAAAAAAAEBARoLCwu9eHh49Y2Njf95eXn/Z2dn/zo6Ov8zMzP/RERE/zw8
-        PP8xMTH/IyMj9QQEBL0BAQEaAAAAAAAAAAABAQFoOzs734CAgP+QkJD/ioqK/11dXdc3NzcrT09PK2dn
-        Z9dbW1v/QkJC/zs7O/8bGxvfAQEBaAAAAAAAAAAAAQEBnlxcXPJvb2//o6Oj/5ubm/9UVFRJAAAAAAAA
-        AABbW1tJmJiY/2BgYP9LS0v/Pz8/8gEBAZ4AAAAAAAAAAAEBAbdeXl78YWFh/6+vr/+rq6v/WFhYEgAA
-        AAAAAAAATk5OEpaWlv+Kior/W1tb/15eXvwBAQG3AAAAAAAAAAABAQGzUVFR/FVVVf+goKD/uLi4/2Bg
-        YBIAAAAAAAAAAEhISBKLi4v/kJCQ/21tbf9zc3P8AQEBswAAAAAAAAAAAQEBljo6OvBJSUn/ZGRk/7m5
-        uf9wcHBJAAAAAAAAAABGRkZJgICA/4iIiP+EhIT/c3Nz8AEBAZYAAAAAAAAAAAEBAWAdHR3WPj4+/0VF
-        Rf9hYWH/YWFh1ywsLCswMDArT09P13R0dP+Dg4P/nZ2d/0xMTNYBAQFgAAAAAAAAAAABAQEXBQUFqC0t
-        LfA7Ozv/QUFB/0VFRf8wMDD/NTU1/1xcXP9oaGj/oKCg/5iYmPAPDw+oAQEBFwAAAAAAAAAAAAAAAAEB
-        AUIICAi1LCws8Ds7O/9AQED/RkZG/05OTv9bW1v/l5eX/6ioqPAdHR21AQEBQgAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAQEBQgUFBaUdHR3ROTk57lRUVPt1dXX7kJCQ7mdnZ9ESEhKlAQEBQgAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAABAQEWAQEBWwEBAYwBAQGlAQEBpQEBAYwBAQFbAQEBFgAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAgAEAAIABAADgBwAAwAMAAIABAACAAQAAgYEAAIGBAACBgQAAgYEAAIABAACAAQAAwAMAAOAH
-        AADwDwAA//8AAA==
-</value>
+  <data name="magnifier" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\magnifier.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pencil" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pencil.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="power" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\control-power.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="question" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\question.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="reload" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arrow-circle-315.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\arrow-repeat.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wrench" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wrench-screwdriver.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="toolbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolbox.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
