@@ -101,11 +101,12 @@ namespace Micro.Menu.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ww0KCXsNCgkJInRleHQiOiAiRXhhbXBsZSIsDQoJCSJpdGVtcyI6IFsNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIG9uZSIsDQoJCQkJInBhdGgiOiAiQzpcXFdpbmRvd3NcXG5vdGVwYWQuZXhlIg0KCQkJfSwNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIHdcL28gcHJvY2VzcyINCgkJCX0sDQoJCQkic2VwYXJhdG9yIiwNCgkJCXsNCgkJCQkidGV4dCI6ICJNZW51IG9uZSIsDQoJCQkJImljb24iOiAiQzpcXFdpbmRvd3NcXFN5c3RlbTMyXFxpbWFnZXJlcy5kbGwsMTciLA0KCQkJCSJpdGVtcyI6IFsNCgkJCQkJew0KCQkJCQkJInRleHQiOiAiU3ViLWl0ZW0gb25lIiwNCgkJCQkJCSJwYXRoIjogIkM6XFxXaW5kb3dzXFxTeXN0ZW0zMlxcY21kLmV4ZSIsDQoJCQkJCQkiYXJn [stringa troncata]&quot;;.
+        ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static string defaultJson {
+        internal static byte[] defaultMenu {
             get {
-                return ResourceManager.GetString("defaultJson", resourceCulture);
+                object obj = ResourceManager.GetObject("defaultMenu", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

@@ -130,8 +130,8 @@
   <data name="cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cross.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="defaultJson" xml:space="preserve">
-    <value>Ww0KCXsNCgkJInRleHQiOiAiRXhhbXBsZSIsDQoJCSJpdGVtcyI6IFsNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIG9uZSIsDQoJCQkJInBhdGgiOiAiQzpcXFdpbmRvd3NcXG5vdGVwYWQuZXhlIg0KCQkJfSwNCgkJCXsNCgkJCQkidGV4dCI6ICJJdGVtIHdcL28gcHJvY2VzcyINCgkJCX0sDQoJCQkic2VwYXJhdG9yIiwNCgkJCXsNCgkJCQkidGV4dCI6ICJNZW51IG9uZSIsDQoJCQkJImljb24iOiAiQzpcXFdpbmRvd3NcXFN5c3RlbTMyXFxpbWFnZXJlcy5kbGwsMTciLA0KCQkJCSJpdGVtcyI6IFsNCgkJCQkJew0KCQkJCQkJInRleHQiOiAiU3ViLWl0ZW0gb25lIiwNCgkJCQkJCSJwYXRoIjogIkM6XFxXaW5kb3dzXFxTeXN0ZW0zMlxcY21kLmV4ZSIsDQoJCQkJCQkiYXJncyI6ICJcL2sgdGl0bGUgVGVybWluYWwgJiBwcm9tcHQgJXVzZXJuYW1lJUAldXNlcmRvbWFpbiU6fiQkICIsDQoJCQkJCQkid29ya0RpciI6ICJDOlxcIg0KCQkJCQl9DQoJCQkJXQ0KCQkJfQ0KCQldDQoJfSwNCgl7DQoJCSJmb2xkZXIiOiJDOiBcXCIsDQoJCSJtYXNrIjogWw0KCQkJIioiDQoJCV0sDQoJCSJtYXhEZXB0aCI6IDEsDQoJCSJzaG93SGlkZGVuRmlsZXMiOiBmYWxzZSwNCgkJInNob3dIaWRkZW5Gb2xkZXJzIjogZmFsc2UsDQoJCSJzaG93T25seUZpbGVzIjogZmFsc2UsDQoJCSJzaG93T25seUZvbGRlcnMiOiB0cnVlLA0KCQkic29ydEJ5TmFtZSI6IHRydWUNCgl9DQpd</value>
+  <data name="defaultMenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\defaultmenu.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="magnifier" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\magnifier.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

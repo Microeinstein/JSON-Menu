@@ -1,0 +1,45 @@
+[
+  {
+    "text": "Example",
+    "items": [
+      {
+        "text": "Item one",
+        "path": "C:\\Windows\\notepad.exe"
+      },
+      {
+        "text": "Item w/o process"
+      },
+      "separator",
+      {
+        "text": "Menu one",
+        "icon": "C:\\Windows\\System32\\imageres.dll,17",
+        "items": [
+          {
+            "text": "Sub-item one",
+            "path": "C:\\Windows\\System32\\cmd.exe",
+            "args": "/k title Terminal & prompt %username%@%userdomain%:~$$ ",
+            "workDir": "C:\\"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "C:\\",
+    "mask": [
+      "*"
+    ],
+    "items": [
+      {
+        "text": "Just an entry above folder content",
+        "icon": "C:\\Windows\\System32\\imageres.dll,56"
+      }
+    ],
+    "maxDepth": 1,
+    "showHiddenFiles": false,
+    "showHiddenFolders": false,
+    "showOnlyFiles": false,
+    "showOnlyFolders": true,
+    "sortByName": true
+  }
+]
