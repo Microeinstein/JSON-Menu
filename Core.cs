@@ -165,16 +165,18 @@ namespace Micro.Menu {
             return temp.ToString();
         }
         public static bool IsCUI(string path) {
-            try {
-                var file = File.Open(path, FileMode.Open, FileAccess.Read);
-                var map = CreateFileMapping(file.Handle, IntPtr.Zero, FILE_PAGE_READONLY, 0, 0, null);
-                var remap = MapViewOfFile(map, FILE_MAP_READ, 0, 0, 0);
-                IMAGE_NT_HEADERS headers = (IMAGE_NT_HEADERS)Marshal.PtrToStructure(ImageNtHeader(remap), typeof(IMAGE_NT_HEADERS));
-                file.Close();
-                return headers.OptionalHeader.Subsystem == IMAGE_SUBSYSTEM.WINDOWS_CUI;
-            } catch {
+            if (!File.Exists(path) || Path.GetExtension(path) != ".exe")
                 return false;
+            IMAGE_NT_HEADERS? headers = null;
+            using (var file = File.Open(path, FileMode.Open, FileAccess.Read)) {
+                try {
+                    var map = CreateFileMapping(file.SafeFileHandle.DangerousGetHandle(), IntPtr.Zero, FILE_PAGE_READONLY, 0, 0, null);
+                    var remap = MapViewOfFile(map, FILE_MAP_READ, 0, 0, 0);
+                    headers = (IMAGE_NT_HEADERS)Marshal.PtrToStructure(ImageNtHeader(remap), typeof(IMAGE_NT_HEADERS));
+                } catch { }
+                file.Close();
             }
+            return headers != null && headers?.OptionalHeader.Subsystem == IMAGE_SUBSYSTEM.WINDOWS_CUI;
         }
     }
 
