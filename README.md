@@ -14,7 +14,7 @@ If doesn't exist **menu.json** it creates a default menu as example.
   * Left click for custom menu
   * Right click for internal menu:
     * Show sample menu
-    * Edit menu (launch default editor)
+    * Edit menu (launches default editor)
     * Find icon
     * Reload menu
     * Launch at startup
@@ -38,17 +38,17 @@ If doesn't exist **menu.json** it creates a default menu as example.
   },
   "separator",
   {
-    "folder": "Directory",        //Automatic folder list
+    "path": "Directory",          //Automatic list of folders tree
     "mask": ["*.png"],            //Array of masks to filters files
-    "maxDepth": 1,                //Depth of search
+    "maxDepth": 1,                //Maximum tree depth
     "showHiddenFiles": false,
     "showHiddenFolders": false,
     "showOnlyFiles": false,       //Doesn't show folders
     "showOnlyFolders": true,      //Doesn't show files
-    "sortByName": true            //Default sorting is file type
+    "sortByName": true            //By default, sorting mode is by type
   },
   {
-    "NirPack": ".\\package.nlp"
+    "NirPack": ".\\package.nlp"   //NirLauncher package
   }
 ]
 ```
