@@ -10,7 +10,7 @@ using static Micro.Menu.Core;
 namespace Micro.Menu {
     class Element {
         List<string> int_files;
-        string _text, _icon, _path, _args, _workdir, _folder, _nirPack;
+        string _text, _icon, _path, _args, _workdir, _nirPack;
         int depth = 0;
 
         public bool separator { get; set; }
@@ -39,10 +39,6 @@ namespace Micro.Menu {
             get => _workdir;
             set => _workdir = Environment.ExpandEnvironmentVariables(value);
         }
-        public string folder {
-            get => _folder;
-            set => _folder = Environment.ExpandEnvironmentVariables(value);
-        }
         public string nirPack {
             get => _nirPack;
             set => _nirPack = Environment.ExpandEnvironmentVariables(value);
@@ -64,7 +60,7 @@ namespace Micro.Menu {
         public bool isPath => !string.IsNullOrEmpty(path);
         public bool isArgs => !string.IsNullOrEmpty(args);
         public bool isWorkdir => !string.IsNullOrEmpty(workDir);
-        public bool isFolder => !string.IsNullOrEmpty(folder);
+        public bool isFolder => isPath && isDirectory(path);
         public bool isNirPack => !string.IsNullOrEmpty(nirPack);
         public bool isMask => mask != null && mask.Count > 0;
 
@@ -73,42 +69,34 @@ namespace Micro.Menu {
 
             if (isNirPack)
                 it = parseNirPack();
-            else if (isFolder)          //Automatic folder list
-                it = parseFolder();
-            else if (!separator)        //Defined menu-item listing
-                it = parseCustom();
-            else                        //Separator
+            else if (!separator)
+                it = parseItem();
+            else 
                 it = new ToolStripSeparator();
 
             return it;
         }
-        ToolStripMenuItem parseFolder() {
-            string name = Path.GetFileName(folder);
-            var fi = new FileInfo(folder, (folder == Directory.GetDirectoryRoot(folder) ? folder : name), isIcon ? getCustomImage(icon) : null);
-            var it = new ToolStripMenuItem(fi.name);
-            if (fi.hasIcon)
-                it.Image = fi.icon;
-            it.Tag = fi;
-            it.MouseUp += Context.itemClick;
-            addTree(folder, ref it);
-            return it;
-        }
-        ToolStripMenuItem parseCustom() {
-            var it = new ToolStripMenuItem(
-                text,
-                isIcon ? getCustomImage(icon) :
-                isPath ? ExtractImage(path) : new Bitmap(1, 1)
-            );
+        ToolStripMenuItem parseItem() {
+            //If path is root assign name "C:\" otherwise "myFolder"
+            string name = text ?? (path == Directory.GetDirectoryRoot(path) ? path : Path.GetFileName(path));
+            Image image = isIcon ? getCustomImage(icon) : null;
+            FileInfo fi = isPath ? new FileInfo(path, args, workDir, name, image) : null;
+            var it = new ToolStripMenuItem(name, fi?.icon ?? image);
             if (isPath) {
-                it.MouseUp += Context.itemClick;
-                var fi = new FileInfo(path, args, workDir);
                 it.Tag = fi;
+                it.MouseUp += Context.itemClick;
                 it.ToolTipText = fi.description;
             }
+            if (isFolder)
+                addTree(path, ref it);
             if (items.Count > 0) {
-                foreach (Element sub in items)
-                    it.DropDownItems.Add(sub.toMenuItem());
+                for (int e = 0; e < items.Count; e++) {
+                    var sub = items[e];
+                    it.DropDownItems.Insert(e, sub.toMenuItem());
+                }
             }
+            if (isFolder && items.Count > 0)
+                it.DropDownItems.Insert(items.Count, new ToolStripSeparator());
             return it;
         }
         ToolStripMenuItem parseNirPack() {
@@ -143,17 +131,17 @@ namespace Micro.Menu {
 
             try {
                 foreach (string subfolder in Directory.GetDirectories(folder, "*", SearchOption.TopDirectoryOnly)) {
-                    ToolStripMenuItem folderItem = new ToolStripMenuItem();
+                    var folderItem = new ToolStripMenuItem();
                     if (maxDepth == -1 || depth < maxDepth) {
                         addFolders(subfolder, depth, ref folderItem);
                         if (!showOnlyFolders)
                             addFiles(subfolder, ref folderItem);
                     }
                     if (showHiddenFolders || !isHidden(subfolder)) {
-                        FileInfo fi = new FileInfo(subfolder);
+                        var fi = new FileInfo(subfolder);
                         folderItem.Text = fi.name;
                         if (fi.hasIcon)
-                        folderItem.Image = fi.icon;
+                            folderItem.Image = fi.icon;
                         folderItem.MouseUp += Context.itemClick;
                         folderItem.Name = "folder";
                         folderItem.ToolTipText = fi.description;
@@ -169,8 +157,8 @@ namespace Micro.Menu {
             foreach (string type in isMask ? mask : noMask) {
                 foreach (string file in Directory.GetFiles(folder, type)) {
                     if (showHiddenFiles || !isHidden(file)) {
-                        ToolStripMenuItem fileItem = new ToolStripMenuItem();
-                        FileInfo fi = new FileInfo(file);
+                        var fileItem = new ToolStripMenuItem();
+                        var fi = new FileInfo(file);
                         fileItem.MouseUp += Context.itemClick;
                         fileItem.Name = "file";
                         fileItem.Text = fi.name;

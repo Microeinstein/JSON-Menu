@@ -12,7 +12,7 @@ using static Micro.Menu.Core;
 namespace Micro.Menu {
     public class FileInfo {
         public const string internalReq = "InternetShortcut";
-        public string name;
+
         public string description {
             get {
                 if (!string.IsNullOrWhiteSpace(_desc))
@@ -36,31 +36,32 @@ namespace Micro.Menu {
         public string finalPath => isShortcut ? destination : path;
         public string parentDir => Directory.GetParent(finalPath).FullName;
         public string finalWorkDir => string.IsNullOrWhiteSpace(workingDir) ? parentDir : workingDir;
-        public readonly string path, extension, destination, destExt, arguments, workingDir, iconPath;
-        public readonly int iconIndex;
-        public readonly bool isShortcut, isDirectory;
-        public Image icon;
         public bool hasIcon => icon != null;
-        string _desc;
 
-        public FileInfo(string filePath, string args, string workDir) {
-            path = filePath;
-            arguments = args;
-            workingDir = workDir;
-            extension = Path.GetExtension(path).ToLower();
-        }
-        public FileInfo(string filePath, string name = null, Image icon = null) {
+        public string name, path, extension, destination, destExt, arguments, workingDir, iconPath;
+        public int iconIndex;
+        public bool isShortcut, isDirectory;
+        public Image icon;
+        string _desc;
+        
+        public FileInfo(string filePath, string args = null, string workDir = null, string name = null, Image icon = null) {
             if (!File.Exists(filePath) && !(isDirectory = Directory.Exists(filePath)))
                 throw new FileNotFoundException();
             path = filePath;
-            extension = Path.GetExtension(path).ToLower();
+            extension = Path.GetExtension(filePath).ToLower();
+            arguments = args;
+            workingDir = workDir;
+            resolveLink();
             this.name = name ?? Path.GetFileNameWithoutExtension(filePath).Replace("&", "&&");
+            this.icon = icon ?? getImage();
+        }
+        void resolveLink() {
             if (!isDirectory) {
                 isShortcut = (extension == ".lnk" || extension == ".url");
                 switch (extension) {
                     case ".lnk":
-                        string lnkPath = filePath.Substring(0, filePath.LastIndexOf(@"\"));
-                        string lnkName = filePath.Substring(filePath.LastIndexOf(@"\") + 1);
+                        string lnkPath = path.Substring(0, path.LastIndexOf(@"\"));
+                        string lnkName = path.Substring(path.LastIndexOf(@"\") + 1);
                         if (!lnkName.EndsWith(".lnk"))
                             lnkName += ".lnk";
 
@@ -73,8 +74,8 @@ namespace Micro.Menu {
                             ShellLinkObject lnk = (ShellLinkObject)lnkItem.GetLink;
                             destination = HandleWoW(lnk.Path);
                             destExt = Path.GetExtension(destination).ToLower();
-                            arguments = lnk.Arguments;
-                            workingDir = lnk.WorkingDirectory;
+                            arguments = arguments ?? lnk.Arguments;
+                            workingDir = workingDir ?? lnk.WorkingDirectory;
                             try { _desc = lnk.Description; } catch { }
                             iconIndex = lnk.GetIconLocation(out iconPath);
                         } catch {
@@ -89,7 +90,6 @@ namespace Micro.Menu {
                         break;
                 }
             }
-            this.icon = icon ?? getImage();
         }
         Image getImage() {
             for (int way = 1; way <= 5; way++) {

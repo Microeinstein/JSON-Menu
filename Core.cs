@@ -23,7 +23,8 @@ namespace Micro.Menu {
                             startupArg = "toggleStartup";
         public static readonly string programfiles = Environment.GetEnvironmentVariable("programfiles"),
                                       programw6432 = Environment.GetEnvironmentVariable("programw6432"),
-                                      execPath = $"\"{Application.ExecutablePath.Replace("\"", "")}\"";
+                                      execPath = $"\"{Application.ExecutablePath.Replace("\"", "")}\"",
+                                      defaultMenu = Encoding.Default.GetString(Properties.Resources.defaultMenu);
         public static readonly bool is64Bit = Environment.Is64BitOperatingSystem,
                                     isWoW = is64Bit && !Environment.Is64BitProcess,
                                     isElevated = WindowsIdentity.GetCurrent().Owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid);
@@ -48,10 +49,6 @@ namespace Micro.Menu {
             Large = 0,
             Small = 1
         }
-        public enum FolderType {
-            Open = 0,
-            Closed = 1
-        }
 
         public static bool isHidden(string path) => File.GetAttributes(path).HasFlag(FileAttributes.Hidden);
         public static bool isDirectory(string path) => File.GetAttributes(path).HasFlag(FileAttributes.Directory);
@@ -61,7 +58,7 @@ namespace Micro.Menu {
             var grps = rIconSplit.Match(icon).Groups;
             var path = grps[1].Value;
 
-            if (string.IsNullOrEmpty(grps[3].Value))
+            if (!string.IsNullOrEmpty(grps[3].Value))
                 return ExtractImage(path, int.Parse(grps[3].Value));
             else
                 return ExtractImage(path);
@@ -144,7 +141,7 @@ namespace Micro.Menu {
             ptr = new[] { small, large };
             return new[] { icoS, icoL };
         }
-
+        
         public static string getAbsolutePath(string root, string relative) {
             if (!Path.IsPathRooted(relative))
                 return Path.Combine(root, relative);
@@ -168,12 +165,16 @@ namespace Micro.Menu {
             return temp.ToString();
         }
         public static bool IsCUI(string path) {
-            var file = File.Open(path, FileMode.Open);
-            var map = CreateFileMapping(file.Handle, IntPtr.Zero, FILE_PAGE_READONLY, 0, 0, null);
-            var remap = MapViewOfFile(map, FILE_MAP_READ, 0, 0, 0);
-            IMAGE_NT_HEADERS headers = (IMAGE_NT_HEADERS)Marshal.PtrToStructure(ImageNtHeader(remap), typeof(IMAGE_NT_HEADERS));
-            file.Close();
-            return headers.OptionalHeader.Subsystem == IMAGE_SUBSYSTEM.WINDOWS_CUI;
+            try {
+                var file = File.Open(path, FileMode.Open, FileAccess.Read);
+                var map = CreateFileMapping(file.Handle, IntPtr.Zero, FILE_PAGE_READONLY, 0, 0, null);
+                var remap = MapViewOfFile(map, FILE_MAP_READ, 0, 0, 0);
+                IMAGE_NT_HEADERS headers = (IMAGE_NT_HEADERS)Marshal.PtrToStructure(ImageNtHeader(remap), typeof(IMAGE_NT_HEADERS));
+                file.Close();
+                return headers.OptionalHeader.Subsystem == IMAGE_SUBSYSTEM.WINDOWS_CUI;
+            } catch {
+                return false;
+            }
         }
     }
 

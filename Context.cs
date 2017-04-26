@@ -19,7 +19,7 @@ namespace Micro.Menu {
 
         public static string path = Path.Combine(Application.StartupPath, "menu.json"),
                              temp = Path.Combine(Environment.ExpandEnvironmentVariables("%temp%"), "default.json"),
-                         jsonFile = Encoding.Default.GetString(Convert.FromBase64String(Properties.Resources.defaultJson));
+                         jsonFile = defaultMenu;
         bool justLoaded;
         List<Element> elements = new List<Element>();
         List<ToolStripItem> items;
@@ -54,7 +54,14 @@ namespace Micro.Menu {
                 File.WriteAllText(path, jsonFile);
             } else
                 jsonFile = File.ReadAllText(path);
-            elements = JsonConvert.DeserializeObject<List<Element>>(jsonFile);
+
+            try {
+                elements = JsonConvert.DeserializeObject<List<Element>>(jsonFile);
+            } catch (Exception ex) {
+                quickBarItem.Icon = Properties.Resources.cross;
+                quickBarItem.ShowBalloonTip(8000, "Error", $"Unable to load menu:\n{ex.Message}", ToolTipIcon.Error);
+                return;
+            }
 
             foreach (Element i in elements)
                 items.Add(i.toMenuItem());
@@ -101,19 +108,19 @@ namespace Micro.Menu {
                     try {
                         ProcessStartInfo proc;
                         proc = IsCUI(info.finalPath) ?
-                                   new ProcessStartInfo(@"cmd", $"/k title {info.name} & {final} {info.arguments}") :
+                                   new ProcessStartInfo(@"cmd", $"/k title {info.name} & {final} {info.arguments.Replace("&", "^&")}") :
                                    new ProcessStartInfo(final, info.arguments);
                         proc.WorkingDirectory = info.finalWorkDir;
                         if (e.Button == MouseButtons.Right)
                             proc.Verb = "runas";
                         Process.Start(proc);
                     } catch (Exception ex) {
-                        quickBarItem.ShowBalloonTip(5000, "Warning", $"Failed to start {info.name}:\n{ex.Message}\n\nPath: {final}", ToolTipIcon.Warning);
+                        quickBarItem.ShowBalloonTip(8000, "Warning", $"Failed to start {info.name}:\n{ex.Message}\n\nPath: {final}", ToolTipIcon.Warning);
                     }
                 } else
                     Process.Start("explorer.exe", $@"/select,{final}");
             } else
-                quickBarItem.ShowBalloonTip(5000, "Error", $"Missing file!\n{final}", ToolTipIcon.Error);
+                quickBarItem.ShowBalloonTip(8000, "Error", $"Missing file!\n{final}", ToolTipIcon.Error);
         }
         public static void listClosing(object sender, ToolStripDropDownClosingEventArgs e) {
             quickBarItem.Icon = Properties.Resources.book;
@@ -130,7 +137,7 @@ namespace Micro.Menu {
             Process.Start(path);
         }
         public void showSample(object sender, EventArgs e) {
-            File.WriteAllText(temp, Encoding.Default.GetString(Convert.FromBase64String(Properties.Resources.defaultJson)));
+            File.WriteAllText(temp, defaultMenu);
             Process.Start(temp);
         }
         public void findIcon(object sender, EventArgs e) {
