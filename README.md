@@ -38,9 +38,9 @@ If doesn't exist **menu.json** it creates a default menu as example.
   },
   "separator",
   {
-    "path": "Directory",          //Automatic list of folders tree
+    "path": "Directory",          //Automatic folders tree indexing
     "mask": ["*.png"],            //Array of masks to filters files
-    "maxDepth": 1,                //Maximum tree depth
+    "maxDepth": 1,                //Maximum indexing depth
     "showHiddenFiles": false,
     "showHiddenFolders": false,
     "showOnlyFiles": false,       //Doesn't show folders
