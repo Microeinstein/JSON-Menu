@@ -102,7 +102,7 @@ namespace Micro.Menu {
 
             FileInfo info = (FileInfo)s.Tag;
             var final = info.finalPath;
-            if (File.Exists(final)) {
+            if (File.Exists(final) || Directory.Exists(final)) {
                 if (e.Button != MouseButtons.Middle) {
                     closeFrom = 1;
                     try {
