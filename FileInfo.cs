@@ -12,6 +12,7 @@ using static Micro.Menu.Core;
 namespace Micro.Menu {
     public class FileInfo {
         public const string internalReq = "InternetShortcut";
+        public readonly bool nonExistant;
 
         public string description {
             get {
@@ -45,15 +46,16 @@ namespace Micro.Menu {
         string _desc;
         
         public FileInfo(string filePath, string args = null, string workDir = null, string name = null, Image icon = null) {
-            if (!File.Exists(filePath) && !(isDirectory = Directory.Exists(filePath)))
-                throw new FileNotFoundException();
             path = filePath;
             extension = Path.GetExtension(filePath).ToLower();
-            arguments = args;
-            workingDir = workDir;
-            resolveLink();
             this.name = name ?? Path.GetFileNameWithoutExtension(filePath).Replace("&", "&&");
-            this.icon = icon ?? getImage();
+            nonExistant = !File.Exists(filePath) && !(isDirectory = Directory.Exists(filePath));
+            if (!nonExistant) {
+                arguments = args;
+                workingDir = workDir;
+                resolveLink();
+                this.icon = icon ?? getImage();
+            }
         }
         void resolveLink() {
             if (!isDirectory) {

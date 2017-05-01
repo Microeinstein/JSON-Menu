@@ -105,18 +105,22 @@ namespace Micro.Menu {
             if (File.Exists(final) || Directory.Exists(final)) {
                 if (e.Button != MouseButtons.Middle) {
                     closeFrom = 1;
+#if !DEBUG
                     try {
+#endif
                         ProcessStartInfo proc;
                         proc = IsCUI(info.finalPath) ?
-                                   new ProcessStartInfo(@"cmd", $"/k title {info.name} & {final} {info.arguments.Replace("&", "^&")}") :
+                                   new ProcessStartInfo(@"cmd", $"/k title {info.name} & {final}{(string.IsNullOrEmpty(info.arguments) ? "" : $" {EscapeCMD(info.arguments)}")}") :
                                    new ProcessStartInfo(final, info.arguments);
                         proc.WorkingDirectory = info.finalWorkDir;
                         if (e.Button == MouseButtons.Right)
                             proc.Verb = "runas";
                         Process.Start(proc);
+#if !DEBUG
                     } catch (Exception ex) {
                         quickBarItem.ShowBalloonTip(8000, "Warning", $"Failed to start {info.name}:\n{ex.Message}\n\nPath: {final}", ToolTipIcon.Warning);
                     }
+#endif
                 } else
                     Process.Start("explorer.exe", $@"/select,{final}");
             } else

@@ -178,6 +178,16 @@ namespace Micro.Menu {
             }
             return headers != null && headers?.OptionalHeader.Subsystem == IMAGE_SUBSYSTEM.WINDOWS_CUI;
         }
+        public static string EscapeCMD(string cmd) {
+            return cmd
+                .Replace("^", "^^")
+                .Replace("\"", "\"\"")
+                .Replace("\\", "^\\")
+                .Replace("&", "^&")
+                .Replace("|", "^|")
+                .Replace(">", "^>")
+                .Replace("<", "^<");
+        }
     }
 
     public static class uShell32 {
