@@ -82,21 +82,26 @@ namespace Micro.Menu {
             Image image = isIcon ? getCustomImage(icon) : null;
             FileInfo fi = isPath ? new FileInfo(path, args, workDir, name, image) : null;
             var it = new ToolStripMenuItem(name, fi?.icon ?? image);
-            if (isPath) {
-                it.Tag = fi;
-                it.MouseUp += Context.itemClick;
-                it.ToolTipText = fi.description;
-            }
-            if (isFolder)
-                addTree(path, ref it);
-            if (items.Count > 0) {
-                for (int e = 0; e < items.Count; e++) {
-                    var sub = items[e];
-                    it.DropDownItems.Insert(e, sub.toMenuItem());
+            if (!fi.nonExistant) {
+                if (isPath) {
+                    it.Tag = fi;
+                    it.MouseUp += Context.itemClick;
+                    it.ToolTipText = fi.description;
                 }
+                if (isFolder)
+                    addTree(path, ref it);
+                if (items.Count > 0) {
+                    for (int e = 0; e < items.Count; e++) {
+                        var sub = items[e];
+                        it.DropDownItems.Insert(e, sub.toMenuItem());
+                    }
+                }
+                if (isFolder && items.Count > 0)
+                    it.DropDownItems.Insert(items.Count, new ToolStripSeparator());
+            } else {
+                it.Enabled = false;
+                it.ToolTipText = "This path does not exist";
             }
-            if (isFolder && items.Count > 0)
-                it.DropDownItems.Insert(items.Count, new ToolStripSeparator());
             return it;
         }
         ToolStripMenuItem parseNirPack() {
