@@ -44,13 +44,13 @@ namespace Micro.Menu {
                 grp.Add(soft);
             }
             foreach (var g1 in Groups) {
-                g1.Sort((a, b) => a.Name.CompareTo(b.Name));
                 if (g1.ShowAll) {
                     foreach (var g2 in Groups) {
                         if (g1 != g2)
                             g1.AddRange(g2);
                     }
                 }
+                g1.Sort((a, b) => a.Name.CompareTo(b.Name));
             }
         }
     }
