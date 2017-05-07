@@ -1,12 +1,8 @@
 ﻿using Shell32;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Micro.Menu.Core;
 
 namespace Micro.Menu {
