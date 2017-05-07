@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using Shell32;
 using System;
 using System.Diagnostics;
@@ -8,12 +9,10 @@ using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Microsoft.Win32;
-using static Micro.Menu.Core;
 using static Micro.Menu.uKernel32;
+using static Micro.Menu.uOthers;
 using static Micro.Menu.uShell32;
 using static Micro.Menu.uUser32;
-using static Micro.Menu.uOthers;
 
 namespace Micro.Menu {
     public static class Core {
