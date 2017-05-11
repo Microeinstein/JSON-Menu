@@ -172,6 +172,9 @@ namespace Micro.Menu {
                     var map = CreateFileMapping(file.SafeFileHandle.DangerousGetHandle(), IntPtr.Zero, FILE_PAGE_READONLY, 0, 0, null);
                     var remap = MapViewOfFile(map, FILE_MAP_READ, 0, 0, 0);
                     headers = (IMAGE_NT_HEADERS)Marshal.PtrToStructure(ImageNtHeader(remap), typeof(IMAGE_NT_HEADERS));
+                    UnmapViewOfFile(remap);
+                    CloseHandle(remap);
+                    CloseHandle(map);
                 } catch { }
                 file.Close();
             }
@@ -348,6 +351,11 @@ namespace Micro.Menu {
             uint dwFileOffsetLow,
             uint dwNumberOfBytesToMap);
 
+        [DllImport("kernel32.dll")]
+        public static extern bool UnmapViewOfFile(IntPtr lpBaseAddress);
+
+        [DllImport("kernel32.dll")]
+        public static extern void CloseHandle(IntPtr handle);
     }
     public static class uUser32 {
         [DllImport("User32.dll")]
