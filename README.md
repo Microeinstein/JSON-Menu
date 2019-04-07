@@ -1,6 +1,6 @@
 # JSON Menu
-This tool allows you to make a quick menu to run everything you want with a JSON-formatted file.  
-If doesn't exist **menu.json** it creates a default menu as example.
+This tool allows you to make a quick menu to run everything you want with a JSON-formatted menu.  
+If `menu.json` doesn't exist it creates a default menu as example.
 
 # Features
   * Custom items
