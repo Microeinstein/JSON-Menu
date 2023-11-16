@@ -181,14 +181,30 @@ namespace Micro.Menu {
             return headers != null && headers?.OptionalHeader.Subsystem == IMAGE_SUBSYSTEM.WINDOWS_CUI;
         }
         public static string EscapeCMD(string cmd) {
-            return cmd
+            var sb = new StringBuilder(cmd);
+            for (int i = 0; i < sb.Length; i++) {
+                char c = sb[i];
+                switch (c) {
+                    case '^':
+                    case '"':
+                        sb.Insert(i, c); i++; break;
+                    case '\\':
+                    case '&':
+                    case '|':
+                    case '>':
+                    case '<':
+                        sb.Insert(i, '^'); i++; break;
+                }
+            }
+            return sb.ToString();
+            /*return cmd
                 .Replace("^", "^^")
                 .Replace("\"", "\"\"")
                 .Replace("\\", "^\\")
                 .Replace("&", "^&")
                 .Replace("|", "^|")
                 .Replace(">", "^>")
-                .Replace("<", "^<");
+                .Replace("<", "^<");*/
         }
     }
 

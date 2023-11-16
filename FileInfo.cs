@@ -30,10 +30,15 @@ namespace Micro.Menu {
                 }
             }
         }
-        public string finalPath => isShortcut ? destination : path;
-        public string parentDir => Directory.GetParent(finalPath).FullName;
-        public string finalWorkDir => string.IsNullOrWhiteSpace(workingDir) ? parentDir : workingDir;
-        public bool hasIcon => icon != null;
+        public string finalPath
+            => isShortcut ? destination : path;
+        public string parentDir
+            => Directory.GetParent(finalPath).FullName;
+        public string finalWorkDir
+            => extension == ".url" ? "" :
+            string.IsNullOrWhiteSpace(workingDir) ? parentDir : workingDir;
+        public bool hasIcon
+            => icon != null;
 
         public string name, path, extension, destination, destExt, arguments, workingDir, iconPath;
         public int iconIndex;

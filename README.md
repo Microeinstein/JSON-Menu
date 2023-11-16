@@ -1,58 +1,76 @@
 # JSON Menu
-This tool allows you to make a quick menu to run everything you want with a JSON-formatted file.  
-If doesn't exist **menu.json** it creates a default menu as example.
 
-# Features
-  * Custom items
-  * Automatic folders list
-  * [NirLauncher](http://launcher.nirsoft.net/) packages
-  * GUI/Console recognition
-  * Multiple monitor size
+Customizable menu for the notification area on windows, using JSON and winforms. A sample menu is generated on the first run. This is an hobby project from 2016 and it's not mantained.
 
-# Navigation
-  System tray icon:
-  * Left click for custom menu
-  * Right click for internal menu:
-    * Show sample menu
-    * Edit menu (launches default editor)
-    * Find icon
-    * Reload menu
-    * Launch at startup
-    * Exit
-  
-  Items:
-  * Left click to launch
-  * Right click to launch as administrator
-  * Middle click to find final **path** in explorer
+## Gallery
 
-# Syntax
+<img src="/.repo/left-click.png" alt="Left click" width="49%"> <img src="/.repo/right-click.png" alt="Right click" width="49%"><br>
+<img src="/.repo/icons-small.png" alt="Icon picker - small" width="49%"> <img src="/.repo/icons-large.png" alt="Icon picker - large" width="49%">
+
+## Features
+
+- [x] Manual entries
+- [x] Automatic directory indexing
+- [x] [NirLauncher](http://launcher.nirsoft.net/) packages indexing
+- [x] GUI/Console recognition
+- [x] Detect current monitor size
+- [x] Icon picker
+- [x] Launch at startup
+- [x] Edit JSON configuration with default app
+
+### Mouse navigation
+
+- Left click — json menu
+    - Left click — open
+    - Right click — run as administrator
+    - Middle click — locate resolved path in explorer
+- Right click — internal menu
+
+## Download
+
+See [releases](https://github.com/Microeinstein/JSON-Menu/releases).
+
+## How to build
+
+- Dependencies
+    - **.NET framework** 4.5, winforms
+    - **Newtonsoft.Json** 9.0.1 ([nuget](https://www.nuget.org/packages/Newtonsoft.Json/9.0.1)) — has vulnerability, must be updated
+
+- Other requirements
+    - Windows 7 or later _(?)_
+    - Visual Studio
+
+Being a Visual Studio project, compilation steps will be determined automatically.
+
+## Configuration
+
 ```javascript
-[                                 //Array of objects
+[                                 // list of entries
   {
-    "text": "Label",              //...of the item
-    "icon": "Path,ID",            //...of the custom icon that override file/directory icon
-    "path": "Path",               //...of the file/directory to launch
-    "args": "Arguments",          //...of the executable path
-    "workDir": "Directory",       //...of the executable path
-    "items": []                   //New menu under this item
+    "path": "prog.exe",           // file to open
+    "args": "/flag /?",           // execution arguments
+    "workDir": "D:\\",            // working directory
+    "text": "Label",              // label override
+    "icon": "res.dll,num",        // icon override
+    "items": []                   // submenu entries
   },
   "separator",
   {
-    "path": "Directory",          //Automatic folders tree indexing
-    "mask": ["*.png"],            //Array of masks to filters files
-    "maxDepth": 1,                //Maximum indexing depth
+    "path": "D:\\Games",          // automatic directory indexing
+    "mask": ["*.png"],            // inclusive glob filtering masks
+    "maxDepth": 1,                // limit indexing depth
     "showHiddenFiles": false,
     "showHiddenFolders": false,
-    "showOnlyFiles": false,       //Doesn't show folders
-    "showOnlyFolders": true,      //Doesn't show files
-    "sortByName": true            //By default, sorting mode is by type
+    "showOnlyFiles": false,
+    "showOnlyFolders": true,
+    "sortByName": true            // (sort by type by default)
   },
   {
-    "NirPack": ".\\package.nlp"   //NirLauncher package
+    "NirPack": ".\\package.nlp"   // NirLauncher package
   }
 ]
 ```
 
-# Info
-Built-in icons by [Yusuke Kamiyamane](http://p.yusukekamiyamane.com/) (Fugue)  
-JSON framework by [Newtonsoft](http://www.newtonsoft.com/json)
+## License
+
+[GPLv3](COPYING) ([resources](/Resources) excluded)

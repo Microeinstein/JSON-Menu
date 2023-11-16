@@ -101,17 +101,17 @@ namespace Micro.Menu {
             quickBarItem.Icon = Properties.Resources.book;
 
             FileInfo info = (FileInfo)s.Tag;
+            var url = info.extension == ".url";
             var final = info.finalPath;
-            if (File.Exists(final) || Directory.Exists(final)) {
+            if (url || File.Exists(final) || Directory.Exists(final)) {
                 if (e.Button != MouseButtons.Middle) {
                     closeFrom = 1;
 #if !DEBUG
                     try {
 #endif
-                        ProcessStartInfo proc;
-                        proc = IsCUI(info.finalPath) ?
-                                   new ProcessStartInfo(@"cmd", $"/k title {info.name} & {(final.Contains(' ') ? $"\"{final}\"" : final)}{(string.IsNullOrEmpty(info.arguments) ? "" : $" {EscapeCMD(info.arguments)}")}") :
-                                   new ProcessStartInfo(final, info.arguments);
+                        ProcessStartInfo proc = !url && IsCUI(info.finalPath) ?
+                            new ProcessStartInfo(@"cmd", $"/k title {info.name} & {(final.Contains(' ') ? $"\"{final}\"" : final)}{(string.IsNullOrEmpty(info.arguments) ? "" : $" {EscapeCMD(info.arguments)}")}") :
+                            new ProcessStartInfo(final, info.arguments);
                         proc.WorkingDirectory = info.finalWorkDir;
                         if (e.Button == MouseButtons.Right)
                             proc.Verb = "runas";
